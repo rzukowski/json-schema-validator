@@ -321,6 +321,11 @@ public class V4JsonSchemaTest {
     }
 
     @Test
+    public void testRefIdReference() throws Exception {
+        runTestFile("draft4/idRef.json");
+    }
+
+    @Test
     public void testUUIDValidator() throws Exception {
         runTestFile("draft4/uuid.json");
     }
