@@ -42,7 +42,6 @@ public class JsonMetaSchema {
     static PatternFormat pattern(String name, String regex) {
         return new PatternFormat(name, regex);
     }
-
     public static final List<Format> COMMON_BUILTIN_FORMATS = new ArrayList<Format>();
 
     // this section contains formats that is common for all specification versions.
@@ -71,7 +70,6 @@ public class JsonMetaSchema {
         private static final String ID = "id";
 
         public static final List<Format> BUILTIN_FORMATS = new ArrayList<Format>(JsonMetaSchema.COMMON_BUILTIN_FORMATS);
-
         static {
             // add version specific formats here.
             //BUILTIN_FORMATS.add(pattern("phone", "^\\+(?:[0-9] ?){6,14}[0-9]$"));
@@ -101,7 +99,6 @@ public class JsonMetaSchema {
         private static final String ID = "$id";
 
         public static final List<Format> BUILTIN_FORMATS = new ArrayList<Format>(JsonMetaSchema.COMMON_BUILTIN_FORMATS);
-
         static {
             // add version specific formats here.
             //BUILTIN_FORMATS.add(pattern("phone", "^\\+(?:[0-9] ?){6,14}[0-9]$"));
@@ -130,7 +127,6 @@ public class JsonMetaSchema {
         private static final String ID = "$id";
 
         public static final List<Format> BUILTIN_FORMATS = new ArrayList<Format>(JsonMetaSchema.COMMON_BUILTIN_FORMATS);
-
         static {
             // add version specific formats here.
             //BUILTIN_FORMATS.add(pattern("phone", "^\\+(?:[0-9] ?){6,14}[0-9]$"));
@@ -159,7 +155,6 @@ public class JsonMetaSchema {
         private static final String ID = "$id";
 
         public static final List<Format> BUILTIN_FORMATS = new ArrayList<Format>(JsonMetaSchema.COMMON_BUILTIN_FORMATS);
-
         static {
             // add version specific formats here.
             //BUILTIN_FORMATS.add(pattern("phone", "^\\+(?:[0-9] ?){6,14}[0-9]$"));
@@ -189,14 +184,12 @@ public class JsonMetaSchema {
         private Map<String, Format> formats = new HashMap<String, Format>();
         private String uri;
         private String idKeyword = "id";
-
         public Builder(String uri) {
             this.uri = uri;
         }
-
         private static Map<String, Keyword> createKeywordsMap(Map<String, Keyword> kwords, Map<String, Format> formats) {
             final Map<String, Keyword> map = new HashMap<String, Keyword>();
-            for (Map.Entry<String, Keyword> type : kwords.entrySet()) {
+            for (Map.Entry<String, Keyword> type: kwords.entrySet()) {
                 String keywordName = type.getKey();
                 Keyword keyword = type.getValue();
                 if (ValidatorTypeCode.FORMAT.getValue().equals(keywordName)) {
@@ -212,12 +205,10 @@ public class JsonMetaSchema {
             map.put(formatKeyword.getValue(), formatKeyword);
             return Collections.unmodifiableMap(map);
         }
-
         public Builder addKeyword(Keyword keyword) {
             this.keywords.put(keyword.getValue(), keyword);
             return this;
         }
-
         public Builder addKeywords(Collection<? extends Keyword> keywords) {
             for (Keyword keyword : keywords) {
                 this.keywords.put(keyword.getValue(), keyword);
@@ -229,20 +220,16 @@ public class JsonMetaSchema {
             this.formats.put(format.getName(), format);
             return this;
         }
-
         public Builder addFormats(Collection<? extends Format> formats) {
             for (Format format : formats) {
                 addFormat(format);
             }
             return this;
         }
-
-
         public Builder idKeyword(String idKeyword) {
             this.idKeyword = idKeyword;
             return this;
         }
-
         public JsonMetaSchema build() {
             // create builtin keywords with (custom) formats.
             final Map<String, Keyword> kwords = createKeywordsMap(keywords, formats);
@@ -288,7 +275,7 @@ public class JsonMetaSchema {
 
     /**
      * Builder without keywords or formats.
-     * <p>
+     *
      * Use {@link #getV4()} for the Draft 4 Metaschema, or if you need a builder based on Draft4, use
      *
      * <code>
@@ -303,12 +290,12 @@ public class JsonMetaSchema {
     }
 
     /**
-     * @param uri       the URI of your new JsonMetaSchema that will be defined via this builder.
+     * @param uri the URI of your new JsonMetaSchema that will be defined via this builder.
      * @param blueprint the JsonMetaSchema to base your custom JsonMetaSchema on.
      * @return a builder instance preconfigured to be the same as blueprint, but with a different uri.
      */
     public static Builder builder(String uri, JsonMetaSchema blueprint) {
-        FormatKeyword formatKeyword = (FormatKeyword) blueprint.keywords.get(ValidatorTypeCode.FORMAT.getValue());
+        FormatKeyword formatKeyword = (FormatKeyword)blueprint.keywords.get(ValidatorTypeCode.FORMAT.getValue());
         if (formatKeyword == null) {
             throw new IllegalArgumentException("The formatKeyword did not exist - blueprint is invalid.");
         }
@@ -325,17 +312,14 @@ public class JsonMetaSchema {
         }
         return idNode.textValue();
     }
-
     public String getUri() {
         return uri;
     }
-
     public String getIdKeyword() {
         return idKeyword;
     }
-
     public JsonValidator newValidator(ValidationContext validationContext, String schemaPath, String keyword /* keyword */, JsonNode schemaNode,
-                                      JsonSchema parentSchema) {
+            JsonSchema parentSchema) {
 
         try {
             Keyword kw = keywords.get(keyword);
@@ -354,13 +338,12 @@ public class JsonMetaSchema {
                 logger.warn("Could not load validator " + keyword);
                 throw new JsonSchemaException(e.getTargetException());
             }
-        } catch (JsonSchemaException e) {
+        } catch(JsonSchemaException e) {
             throw e;
         } catch (Exception e) {
             logger.warn("Could not load validator " + keyword);
             throw new JsonSchemaException(e);
         }
     }
-
 
 }

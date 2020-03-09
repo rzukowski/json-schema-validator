@@ -45,7 +45,7 @@ public class JsonSchema extends BaseJsonValidator {
      * or it could potentially be a uri that has been altered by an id. An 'id' is able to completely overwrite
      * the current uri or add onto it. This is necessary so that '$ref's are able to be relative to a
      * combination of the current schema file's uri and 'id' uris visible to this schema.
-     * <p>
+     *
      * This can be null. If it is null, then the creation of relative uris will fail. However, an absolute
      * 'id' would still be able to specify an absolute uri.
      */
@@ -60,8 +60,8 @@ public class JsonSchema extends BaseJsonValidator {
     }
 
     public JsonSchema(ValidationContext validationContext, String schemaPath, URI currentUri, JsonNode schemaNode,
-                      JsonSchema parent) {
-        this(validationContext, schemaPath, currentUri, schemaNode, parent, false);
+                JsonSchema parent) {
+        this(validationContext,schemaPath, currentUri, schemaNode, parent, false);
     }
 
     public JsonSchema(ValidationContext validationContext, URI baseUri, JsonNode schemaNode, boolean suppressSubSchemaRetrieval) {
@@ -92,7 +92,8 @@ public class JsonSchema extends BaseJsonValidator {
         }
     }
 
-    public URI getCurrentUri() {
+    public URI getCurrentUri()
+    {
         return this.currentUri;
     }
 
